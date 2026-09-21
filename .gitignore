@@ -1,0 +1,7 @@
+# Local environment files -- never commit real secrets.
+.env
+.env.local
+.env.*.local
+!.env.example
+
+.planning/
