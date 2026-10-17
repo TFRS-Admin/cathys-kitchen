@@ -37,12 +37,13 @@ Same shape as above; records consent timestamp/source/version and the weekly-men
 - **Data:** Contact name/phone/email; requested day(s)/meals or event details; consent flags; source tag; submission id/timestamp.
 - **Credentials:** Base44 server-side secrets only — never in frontend code, this repo, or any public content field. Secret names (values are never recorded anywhere): `GHL_PRIVATE_INTEGRATION_TOKEN`, `GHL_LOCATION_ID`, `GHL_WEEKLY_ORDERS_PIPELINE_ID`, `GHL_WEEKLY_ORDERS_NEEDS_REVIEW_STAGE_ID`, `GHL_CATERING_PIPELINE_ID`, `GHL_CATERING_NEW_INQUIRY_STAGE_ID`, plus `GHL_FIELD_*`/`GHL_TAG_*` custom-field and tag identifiers.
 - **Failure behavior:** Not transactional — a contact can be created while the opportunity call fails. The function never retries blindly; the customer always gets a working fallback (text Cathy), and the owner can recover the contact manually in GHL.
-- **Status:** Not yet connected. No GHL location, pipeline, or credential exists yet for this business in the connected workspace — none may be assumed from another client's account. The weekly-order and catering forms currently use a interim, GHL-free fallback (an owner-notification email) until this integration is built; see the implementation plan.
+- **Status:** Not yet connected. No GHL location, pipeline, or credential exists yet for this business in the connected workspace — none may be assumed from another client's account. The weekly-order and catering forms currently use an interim, GHL-free fallback (an owner-notification email) purely as pre-launch development/testing scaffolding — see the launch-gate constraint below and `06-DECISIONS.md` D-007. This fallback is not a second accepted integration path; it exists only until `submit-weekly-dinner-request`/`submit-catering-inquiry` replace it.
 
 ## Constraints
 - No customer, order, catering, or subscriber data may be intentionally stored in a Base44 data table (D-002).
 - `.github/workflows/validate-template.yml` runs `markdown-link-check` on every `.md` file in this repo as a required check. Any live/volatile/private URL recorded in `docs/app/*.md` (a Base44 preview URL, an unregistered domain, a GHL link) must be written in backticks as plain text, never as a clickable markdown link, or it will fail CI.
 - This repo does not sync with Base44's GitHub integration (D-001) — `main` here stays protected, PR-only.
+- The site may not be published (`SiteSettings.content_status` set to `live`, or a public domain attached) while any form still depends on the interim owner-notification-email fallback described above — doing so would send real customer data through an unapproved channel and violate acceptance test #11 in `01-PRODUCT.md`/`APPROVED-BRIEF.md`. The real GHL functions must be wired in `TFRS-Admin/cathy-kitchen-2` first (D-007).
 
 ## Diagram
 Not needed — the two-repo, two-system split above is small enough to describe in prose.

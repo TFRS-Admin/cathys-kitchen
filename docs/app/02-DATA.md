@@ -11,7 +11,7 @@ All five are Base44 entities holding **public website content only**. None may h
 | business_name | Public business name | Yes | Defaults to "Cathy's Kitchen" |
 | tagline | Short hero/sub copy | No | |
 | phone_display | Human-readable phone | No | |
-| sms_number | Digits-only number for `sms:` links | No | |
+| sms_number | Digits-only number for `sms:` links | No while `content_status` is `placeholder`; **required before `content_status` may be set to `live`** | P-006 requires the `sms:` fallback to always work, including as the error/outage fallback shown on a failed form submission — a live site with this blank would make that required fallback unusable |
 | pickup_location_name | Pickup location's name | No | |
 | pickup_address_line | Pickup address | No | |
 | pickup_window_text | Pickup hours, e.g. "5:00–6:00 PM" | No | |

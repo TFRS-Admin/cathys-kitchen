@@ -2,7 +2,7 @@
 
 ## Approved design inputs
 **Design package:** None exists separately — no Figma/wireframe/mockup was ever supplied.
-**Approved build brief/design:** The Cathy's Kitchen Base44 build brief (sections 1–14, including the owner's architecture override to native Base44 forms over GHL-hosted redirects — see `06-DECISIONS.md` D-002) is the approved design authority, per `00-README.md`'s authority order. Its visual-direction table (section 6) is the canonical token source.
+**Approved build brief/design:** `docs/app/APPROVED-BRIEF.md` — the Cathy's Kitchen build brief, captured verbatim in this repo (it otherwise exists only in the owner's conversation with the implementing agent, which is not an inspectable or verifiable source for a future agent). It includes the owner's architecture override to native Base44 forms over GHL-hosted redirects (see `06-DECISIONS.md` D-002). Its "Visual direction" table is the canonical token source.
 
 ## Implementation rule
 The approved design is a specification, not production code. Preserve its visual language, hierarchy, states, responsive behavior, and content intent while implementing in Base44/React. Do not redesign the approved UX because another pattern is preferred.

@@ -36,6 +36,12 @@
 **Why:** None of the GHL locations visible in the connected workspace matches Cathy's Kitchen; using the wrong location/credential would be a serious data-routing error.
 **Implication:** Treat "no verified GHL location/credential yet" as a stop condition for wiring the real integration (see `04-ARCHITECTURE.md`), not something to work around with a guess.
 
+### D-007 — The interim owner-notification-email fallback is pre-launch scaffolding only; it is a launch-blocking gap, not an accepted second integration path
+**Status:** Active
+**Decision:** Until the real `submit-weekly-dinner-request`/`submit-catering-inquiry` GHL functions exist, the weekly-order and catering forms in `TFRS-Admin/cathy-kitchen-2` call a simplified, anonymous version of that app's existing `sendOrder` function, which only emails the owner. This exists solely so the forms can be built and tested end-to-end before GHL is wired up. The site must not be published (`SiteSettings.content_status` set to `live`, or a public domain attached) while this fallback is still in use by any form.
+**Why:** Caught by automated review on PR #1 — as originally documented, this fallback contradicted BR-001 ("GHL is the sole system of record") and acceptance test #11 ("no form submission sends an email... until GHL activation is separately approved"). Nothing in the code or docs previously stopped this interim mechanism from reaching real customer traffic if the app were prematurely linked/published; it is real customer PII (name, phone, email) transiting through an ad hoc, unapproved channel outside GHL.
+**Implication:** Phase D (the real GHL functions) is a hard prerequisite for Phase 6/publish, not a nice-to-have — see `04-ARCHITECTURE.md`'s constraints. Any future agent finding this fallback still in place at publish time must treat it as a stop condition, not proceed.
+
 ---
 
 Do not record routine library choices, ordinary implementation details, completed tasks, bug fixes, or facts already authoritative elsewhere.
